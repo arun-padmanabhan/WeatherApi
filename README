@@ -1,0 +1,35 @@
+------------------------------------------------------------------------------------------------------------------------
+
+                        WeatherApi
+
+------------------------------------------------------------------------------------------------------------------------
+
+This Springboot application implements a REST API fronts the OpenWeatherMap service.
+Only 1 API is exposed - /getWeather. It takes in two parameters - city name and country name (optional), appends the API key for the Openweather service and fetches the weather details from it.
+This response is then saved in the H2 database (in memory)
+Subsequently a call is made via the Spring repository CRUD method to fetch the "description" value from the table within H2.
+The appropriate Spring layers are implemented to achieve this.
+
+Additionally, rate limiting is implemented for the Rest API /getWeather - maximum of 5 attempts allowed in an hour. This is done using the bucket4j 3rd party library.
+
+Owing to this, I chose to not implement a global exception handling framework. It would have been imperative if the scalability was a concern with this API.
+
+Since this API fronts the Openweather service, integration tests made the most sense. These are in place to cover the different possible interaction scenarios with the external service.
+
+For purposes of build and deployment, this application has been containerized using Docker.
+
+------------------------------------------------------------------------------------------------------------------------
+
+Steps to build and run the application -
+
+1. cd into the Project location
+2. Run the following command to build the application
+   docker build -t weatherApi .
+
+3. Run the following command to run the application
+   docker run -p 9090:8080 weatherApi
+
+   Once the server is running, an HTTP GET call on this url - http://localhost:9090/getWeather?city=london&country=uk should get the weather details.
+   The city and country request param values can be updated for different results.
+
+------------------------------------------------------------------------------------------------------------------------
