@@ -4,7 +4,7 @@
 
 ------------------------------------------------------------------------------------------------------------------------
 
-This Springboot application implements a REST API fronts the OpenWeatherMap service.
+This Springboot application implements a REST API that fronts the OpenWeatherMap service.
 Only 1 API is exposed - /getWeather. It takes in two parameters - city name and country name (optional), appends the API key for the Openweather service and fetches the weather details from it.
 This response is then saved in the H2 database (in memory)
 Subsequently a call is made via the Spring repository CRUD method to fetch the "description" value from the table within H2.
